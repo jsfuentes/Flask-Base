@@ -2,7 +2,9 @@ from flask import Flask, jsonify, make_response
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, String, Integer
+from flask_cors import CORS, cross_origin
 import os
+
 
 # local config.py
 from config import config
@@ -44,6 +46,7 @@ def insert_user():
     )
     db.session.add(user)
     db.session.commit()
+    return user
 
 
 # Create all tables
@@ -64,8 +67,8 @@ def user_detail(id):
 
 @app.route("/users/create", methods=["GET", "POST"])
 def user_create():
-    insert_user()
-    return make_response("User created", 200)
+    user = insert_user()
+    return jsonify(user.as_dict())
 
 
 if __name__ == '__main__':
