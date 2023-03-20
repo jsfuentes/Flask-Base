@@ -19,5 +19,7 @@ source ./venv/bin/activate
 
 ```
 source ./venv/bin/activate
-python -m flask --debug run
+python -m flask --debug run -p 4000
 ```
+
+_Default of 5000 can cause problems on Mac cuz 5000 is used for control center_

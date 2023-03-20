@@ -8,7 +8,7 @@ import os
 
 # local config.py
 from config import config
-from models.user import User
+from models import user as user_db
 from models.database import db
 
 login_manager = LoginManager()
@@ -44,19 +44,14 @@ user_blueprint = Blueprint(
 
 
 @user_blueprint.route("/<int:id>")
-def user_detail(id):
-    user = db.get_or_404(User, id)
+def get_user(id):
+    user = user_db.get_user(id)
     return jsonify(user.as_dict())
 
 
 @user_blueprint.route("/create", methods=["GET", "POST"])
-def user_create():
-    user = User(
-        username="girl",
-        email="jsjfuenetesj@gmail.com",
-    )
-    db.session.add(user)
-    db.session.commit()
+def insert_user():
+    user = user_db.insert_user()
     return jsonify(user.as_dict())
 
 
