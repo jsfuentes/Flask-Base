@@ -34,3 +34,8 @@ def create_app():
         return '<h1>Testing the Flask Application Factory Pattern</h1>'
 
     return app
+
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run()
