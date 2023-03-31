@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_cors import CORS, cross_origin
-from flask_login import LoginManager
 import os
-from app.extensions import db
+from app.extensions import db, login_manager, migrate
 from config import config
+from app.models.user import db_get_user
 
 
 def create_app():
@@ -16,22 +16,28 @@ def create_app():
     # Initialize Flask extensions here
     CORS(app)
 
-    login_manager = LoginManager()
     login_manager.session_protection = 'strong'
     login_manager.init_app(app)
 
     db.init_app(app)
+    migrate.init_app(app, db)
 
     # Register blueprints here
     from app.users import bp as users_bp
-    app.register_blueprint(users_bp, url_prefix='/users')
+    app.register_blueprint(users_bp, url_prefix='/api/users')
 
     from app.questions import bp as questions_bp
-    app.register_blueprint(questions_bp, url_prefix='/questions')
+    app.register_blueprint(questions_bp, url_prefix='/api/questions')
 
     @app.route('/')
-    def test_page():
-        return '<h1>Testing the Flask Application Factory Pattern</h1>'
+    def index():
+        return 'Hi'
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        user = db_get_user(user_id)
+        print("LOAD USER", user.get_id())
+        return user
 
     return app
 
