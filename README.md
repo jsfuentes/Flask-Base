@@ -5,20 +5,24 @@ This is a **python 3.9.16 project** with flask base to build off of. It contains
 - flask_login setup
 - config for different dev and prod configurations
 - example get and post routes
+- postgres db setup with flask-sqlalchemy and flask-migrate
+- basic user model
 
 ## Setup App
 
-Setup virtual environment
+Setup local virtual environment and install prereqs
 
 ```
 python -m venv venv
 source ./venv/bin/activate
-```
-
-Install prereqs and setup zappa
-
-```
 pip install -r requirements.txt
+```
+
+### Initial DB and Deployment Setup
+
+Globally required only once
+
+```
 zappa init
 ```
 
@@ -29,6 +33,14 @@ Then run this to create the db tables
 
 ```
 flask db init
+flask db migrate -m "init"
+flask db upgrade
+```
+
+And finally deploy to zappa with
+
+```
+zappa deploy production
 ```
 
 ## Run App
@@ -40,7 +52,7 @@ python -m flask --debug run -p 4000
 
 _Default of 5000 can cause problems on Mac cuz 5000 is used for control center_
 
-### Migrations
+## Migrations
 
 Migrations are handle by flask-migrate/alembic
 
@@ -54,13 +66,7 @@ flask db migrate -m "Initial migration."
 flask db upgrade
 ```
 
-## Deploy
-
-Deploy with
-
-```
-zappa deploy production
-```
+## Update Deployment
 
 Update with
 
