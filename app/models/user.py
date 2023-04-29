@@ -9,9 +9,13 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=True)
     picture = db.Column(db.String, nullable=True)
-
+    
+    #time_created = db.Column(db.DateTime(
+        #timezone=True), server_default=func.now())
+    #time_updated = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    
     def as_dict(self):
-        return {"id": self.id, "email": self.email, "name": self.name, "picture": self.picture}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 @login_manager.user_loader
