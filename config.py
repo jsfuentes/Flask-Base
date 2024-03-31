@@ -5,7 +5,7 @@ import json
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     # Specific name for flask-sqlalchemy
-    SQLALCHEMY_DATABASE_URI = json.load(open('zappa_settings.json'))[
+    SQLALCHEMY_DATABASE_URI = json.load(open('./zappa_settings.json'))[
         'production']['environment_variables']['DATABASE_URL']
     JWT_SECRET_KEY = 'your-secret-key'
     # Needed to validate tokens

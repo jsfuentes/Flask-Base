@@ -1,0 +1,7 @@
+{
+  "production": {
+    "environment_variables": {
+      "DATABASE_URL": "postgresql://postgres:BuxCCC-rujjiw-5fudti@database-1.CCCCu4egs9fm.us-east-2.rds.amazonaws.com:5432"
+    }
+  }
+}

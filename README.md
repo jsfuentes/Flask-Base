@@ -18,15 +18,13 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Initial DB and Deployment Setup
+### First Time Setup
 
 Globally required only once
 
-```
-zappa init
-```
+#### DB Setup
 
-Setup your db url in `zappa_settings.json` by adding `environment_variables` object under the production object with key `DATABASE_URL`.
+Rename `example_zappa_settings.json` to `zappa_settings.json` and add `DATABASE_URL` under `production`/`environment_variables`.
 Also setup other configs in config.py
 
 Then run this to create the db tables
@@ -35,6 +33,12 @@ Then run this to create the db tables
 flask db init
 flask db migrate -m "init"
 flask db upgrade
+```
+
+#### Zappa/Serverless Deployment Setup
+
+```
+zappa init
 ```
 
 And finally deploy to zappa with
